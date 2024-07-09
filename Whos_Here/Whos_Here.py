@@ -14,8 +14,7 @@ from emoji import demojize
 import logging
 import os
 from datetime import datetime
-from collections import defaultdict
-import time
+from pyfiglet import Figlet
 
 
 DIR              = os.getcwd()
@@ -24,7 +23,8 @@ port             = 6667
 nickname         = 'frostqbot'
 token            = 'oauth:d0sktoon2hp5cycavtyog9nz2pshld'
 spokenFile       = 'lists\has_spoken.txt'
-presentFile      = 'lists\was_present.txt'
+presentFile      = 'lists\current_users.txt'
+presentLogFile   = 'lists\was_present.txt'
 currentList, presentList = [], []
 
 
@@ -71,23 +71,6 @@ def ToFile(file, data, type):
     with open(file, type) as file1:
         file1.write(data)
 
-def process_file(file_path):
-    user_times = defaultdict(lambda: {"enter": None, "exit": None})
-    
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-    
-    for line in lines:
-        user_id = line.strip()
-        current_time = time.time()
-        
-        if user_times[user_id]["enter"] is None:
-            user_times[user_id]["enter"] = current_time
-        else:
-            user_times[user_id]["exit"] = current_time
-    
-    return user_times
-
 
 
 GetContextFileInfo()
@@ -130,6 +113,8 @@ with open(spokenFile, 'w') as f:
     pass 
 with open(presentFile, 'w') as f:
     pass 
+with open(presentLogFile, 'w') as f:
+    pass 
 
 
 while True:
@@ -153,17 +138,45 @@ while True:
                 ToFile(spokenFile, user+" - "+now+"\n", "a")
 
             # was present
-            user_times = process_file(presentFile)
 
-            for user, times in user_times.items():
-                enter_time = times['enter']
-                exit_time = times['exit']
-                enter_str = time.ctime(enter_time) if enter_time else 'N/A'
-                exit_str = time.ctime(exit_time) if exit_time else 'N/A'
-                print(f"User {user} entered at {enter_str} and exited at {exit_str}")
+            stayers = []
+
+            with open(presentFile, "r") as f:
+                plines = f.readlines()
+
+                for i in range(len(plines)):
+                    for k in range(len(presentList)):
+                        if plines[i] == presentList[k]:
+                            stayers.append(presentList[k])
+
+                new_joiners = plines
+                leavers = presentList 
+
+                for x in range(len(stayers)):
+                    new_joiners.remove(stayers[x])
+
+                for x in range(len(stayers)):
+                    leavers.remove(stayers[x])  
+
+                print("new_joiners",new_joiners)
+
+                now = datetime.now().strftime("%I:%M:%S%p %Z")
+                for b in range(len(new_joiners)):
+                    temp = new_joiners[b].strip("\n")
+                    ToFile(presentLogFile, "Joined -- " + temp +" - "+now+"\n", "a")
+
+                print("leavers",leavers)
+
+                now = datetime.now().strftime("%I:%M:%S%p %Z")
+                for b in range(len(leavers)):
+                    temp = leavers[b].strip("\n")
+                    ToFile(presentLogFile, "left -- " + temp +" - "+now+"\n", "a")
+
+                presentList = stayers + new_joiners
+
+                print("current viewers", presentList)
 
                 
-
 
             messenger = resp.split('!')[0][1:]
             #check if messenger is one of the possible bots responsible for queue change
@@ -171,9 +184,13 @@ while True:
 
                 #kill the queue bot after stream ends
                 if endContext in resp:
-                    print("Bot has been shut down successfuly")
-
                     #formulating report
+                    f = Figlet(font='slant')
+                    header = f.renderText("Who's watching?")
+
+                    
+
+                    print("Bot has been shut down successfuly, you can close this terminal window.")
 
                     exit()
 
