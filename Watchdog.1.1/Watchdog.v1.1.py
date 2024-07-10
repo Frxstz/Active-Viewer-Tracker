@@ -28,8 +28,6 @@ presentLogFile   = 'lists\was_present.txt'
 currentList, presentList = [], []
 
 
-
-
 with open("chat.log", 'w') as f:
     pass
 
