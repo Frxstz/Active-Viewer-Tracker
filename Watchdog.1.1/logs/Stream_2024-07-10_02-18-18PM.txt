@@ -1,0 +1,30 @@
+Username: chimeraxts
+  Time Joined: 2024-07-10_02-18-10PM
+  Time Left: 2024-07-10_02-18-18PM
+  Duration: 0:00:08
+  First Chat: 02:18:18PM 
+--------------------------------------------------
+Username: sturmtruppe70
+  Time Joined: 2024-07-10_02-18-10PM
+  Time Left: 2024-07-10_02-18-18PM
+  Duration: 0:00:08.312255 (Stayed until end of stream)
+  First Chat: User has no message sent in chat
+--------------------------------------------------
+Username: frxstz_
+  Time Joined: 2024-07-10_02-18-10PM
+  Time Left: 2024-07-10_02-18-18PM
+  Duration: 0:00:08.312255 (Stayed until end of stream)
+  First Chat: 02:18:10PM 
+--------------------------------------------------
+Username: zelaynia
+  Time Joined: 2024-07-10_02-18-10PM
+  Time Left: 2024-07-10_02-18-18PM
+  Duration: 0:00:08.312255 (Stayed until end of stream)
+  First Chat: User has no message sent in chat
+--------------------------------------------------
+Username: streamelements
+  Time Joined: 2024-07-10_02-18-10PM
+  Time Left: 2024-07-10_02-18-18PM
+  Duration: 0:00:08.312255 (Stayed until end of stream)
+  First Chat: User has no message sent in chat
+--------------------------------------------------
